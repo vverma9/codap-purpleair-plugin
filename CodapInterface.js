@@ -130,7 +130,7 @@ var codapInterface = Object.create({
         }
       }
 
-      var getFrameReq = {action: 'get', resource: 'interactiveFrame'};
+      var getFrameReq = { action: 'get', resource: 'interactiveFrame' };
       var newFrame = {
         name: config.name,
         title: config.title,
@@ -154,7 +154,7 @@ var codapInterface = Object.create({
 
       this.on('get', 'interactiveState', function () {
         console.log('sending interactiveState: ' + JSON.stringify(this.interactiveState));
-        return ({success: true, values: this.getInteractiveState()});
+        return ({ success: true, values: this.getInteractiveState() });
       }.bind(this));
 
       // update, then get the interactiveFrame.
@@ -188,7 +188,7 @@ var codapInterface = Object.create({
 
   },
 
-  destroy: function () {},
+  destroy: function () { },
 
   /**
    * Sends a request to CODAP. The format of the message is as defined in
@@ -210,7 +210,7 @@ var codapInterface = Object.create({
           this_.stats.countDiRplTimeout++;
         } else {
           this_.connectionState = 'active';
-          response.success? this_.stats.countDiRplSuccess++: this_.stats.countDiRplFail++;
+          response.success ? this_.stats.countDiRplSuccess++ : this_.stats.countDiRplFail++;
           resolve(response);
         }
         if (callback) {
@@ -273,7 +273,7 @@ var codapInterface = Object.create({
     });
     if (!handled) {
       stats.countCodapUnhandledReq++;
-      callback({success: true});
+      callback({ success: true });
     }
   },
 
