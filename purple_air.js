@@ -122,6 +122,15 @@ var purple_air = {
         document.getElementById("minutes").selectedIndex = 0
     },
 
+    getSensorNum: function () {
+        let value = document.getElementById("sensor_input").value
+        purple_air.state.sensorNum = value
+        return value
+    },
+
+    setSensorNum: function () {
+        document.getElementById("sensor_input").value = ""
+    },
 
     clearLocationState: function () {
         purple_air.state.city = ""
@@ -157,6 +166,8 @@ var purple_air = {
         purple_air.setEndDate()
 
         purple_air.setMinutesValue()
+
+        purple_air.setSensorNum()
 
         purple_air.state = {
             ...purple_air.default
@@ -433,20 +444,39 @@ var purple_air = {
         let fetch_purple_air = await (await fetch(BASE_PURPLE_AIR_URL)).json()
 
         let data = fetch_purple_air.data
-        for (let d of data) {
 
-            let newRow = { ...purple_air_fields }
-            newRow.Location = purple_air.state.city
-            newRow.sensor_index = d[0]
-            newRow.name = d[1]
-            // newRow.primary_id_a =   d[2]
-            // newRow.primary_key_a =  d[3]
-            newRow.latitude = d[2]
-            newRow.longitude = d[3]
-            // latLngList.push( `${d[2]},${d[3]}` )
-            sensorValues.push(newRow)
-
+        // if user inputs 0 or null or greater than gathered amount of sensors
+        if (!purple_air.state.sensorNum || purple_air.state.sensorNum == 0  || purple_air.state.sensorNum >= data.length) {
+            for (let d of data) {
+                let newRow = { ...purple_air_fields }
+                newRow.Location = purple_air.state.city
+                newRow.sensor_index = d[0]
+                newRow.name = d[1]
+                // newRow.primary_id_a =   d[2]
+                // newRow.primary_key_a =  d[3]
+                newRow.latitude = d[2]
+                newRow.longitude = d[3]
+                // latLngList.push( `${d[2]},${d[3]}` )
+                sensorValues.push(newRow)
+            }
         }
+        // otherwise loop through just number of sensors the user wants
+        else {
+            for (let i = 0; i < purple_air.state.sensorNum; i++) {
+                let d = data[i]
+                let newRow = { ...purple_air_fields }
+                newRow.Location = purple_air.state.city
+                newRow.sensor_index = d[0]
+                newRow.name = d[1]
+                // newRow.primary_id_a =   d[2]
+                // newRow.primary_key_a =  d[3]
+                newRow.latitude = d[2]
+                newRow.longitude = d[3]
+                // latLngList.push( `${d[2]},${d[3]}` )
+                sensorValues.push(newRow)
+            }
+        }
+        // }
 
         // console.log(latLngList.join("|"))
         // let elevationList = await purple_air.getElevationFromLatLong(latLngList.join("|"))
@@ -699,7 +729,8 @@ purple_air.state = {
     radiusInMiles: default_radius_value,
     startDate: "",
     endDate: "",
-    averaginMinutes: 0
+    averaginMinutes: 0,
+    sensorNum: 0
 };
 
 purple_air.default = {
@@ -712,7 +743,8 @@ purple_air.default = {
     radiusInMiles: default_radius_value,
     startDate: "",
     endDate: "",
-    averaginMinutes: 0
+    averaginMinutes: 0,
+    sensorNum: 0
 }
 
 // purple_air.state = {

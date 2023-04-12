@@ -156,6 +156,22 @@
           </select>
     </div>
 
+    <div class="input-group mt-2">        
+        <i class="input-group-text bi bi-123"></i>
+        <input 
+            id="sensor_input" 
+            name="sensor_input" 
+            type="text" 
+            class="form-control" 
+            placeholder="Max number of sensors (leave blank for all)" 
+            style="width:fit-content;"
+            onchange="
+        purple_air.state.sensorNum = this.value; 
+        purple_air.hideError(); 
+        console.log('Sensor Num Value Updated ==> ' + this.value)"
+            >
+    </div>
+
     <div class="d-flex justify-content-center mt-2">
         <button id="reset" 
         onclick="purple_air.reset()"  
