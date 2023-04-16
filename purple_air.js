@@ -445,47 +445,27 @@ var purple_air = {
 
         let data = fetch_purple_air.data
 
-        // if user inputs 0 or null or greater than gathered amount of sensors
-        if (!purple_air.state.sensorNum || purple_air.state.sensorNum == 0  || purple_air.state.sensorNum >= data.length) {
-            for (let d of data) {
-                let newRow = { ...purple_air_fields }
-                newRow.Location = purple_air.state.city
-                newRow.sensor_index = d[0]
-                newRow.name = d[1]
-                // newRow.primary_id_a =   d[2]
-                // newRow.primary_key_a =  d[3]
-                newRow.latitude = d[2]
-                newRow.longitude = d[3]
-                // latLngList.push( `${d[2]},${d[3]}` )
-                sensorValues.push(newRow)
+        let totalReqSensors = purple_air.state.sensorNum || 0
+        let recordsCount = 0;
+
+        for (let d of data) {
+            let newRow = { ...purple_air_fields }
+            newRow.Location = purple_air.state.city
+            newRow.sensor_index = d[0]
+            newRow.name = d[1]
+            // newRow.primary_id_a =   d[2]
+            // newRow.primary_key_a =  d[3]
+            newRow.latitude = d[2]
+            newRow.longitude = d[3]
+            // latLngList.push( `${d[2]},${d[3]}` )
+            sensorValues.push(newRow)
+
+            // Keep count of the sensor records read and terminate if max cap is reached
+            recordsCount = recordsCount + 1; 
+            if(totalReqSensors > 0 && recordsCount >= totalReqSensors){
+                break;
             }
         }
-        // otherwise loop through just number of sensors the user wants
-        else {
-            for (let i = 0; i < purple_air.state.sensorNum; i++) {
-                let d = data[i]
-                let newRow = { ...purple_air_fields }
-                newRow.Location = purple_air.state.city
-                newRow.sensor_index = d[0]
-                newRow.name = d[1]
-                // newRow.primary_id_a =   d[2]
-                // newRow.primary_key_a =  d[3]
-                newRow.latitude = d[2]
-                newRow.longitude = d[3]
-                // latLngList.push( `${d[2]},${d[3]}` )
-                sensorValues.push(newRow)
-            }
-        }
-        // }
-
-        // console.log(latLngList.join("|"))
-        // let elevationList = await purple_air.getElevationFromLatLong(latLngList.join("|"))
-        // console.log(elevationList)
-
-        // for (const [index, sensor] of sensorValues.entries()){
-        //     console.log(sensor.name, elevationList[index])
-        //     sensor.elevation = elevationList[index]
-        // }
 
         // if (flag === 1) {        console.log(sensorValues)        }
 
