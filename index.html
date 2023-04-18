@@ -157,19 +157,21 @@
     </div>
 
     <div class="input-group mt-2">        
-        <i class="input-group-text bi bi-123"></i>
+        <i class="input-group-text bi bi-three-dots"></i>
         <input 
             id="sensor_input" 
             name="sensor_input" 
             type="text" 
             class="form-control" 
-            placeholder="Max number of sensors (leave blank for all)" 
+            placeholder="Max Sensors" 
             style="width:fit-content;"
             onchange="
         purple_air.state.sensorNum = this.value; 
         purple_air.hideError(); 
         console.log('Sensor Num Value Updated ==> ' + this.value)"
             >
+        <!-- hover icon for City field -->
+        <i class="input-group-text info-icon bi bi-info-circle" data-toggle="tooltip" title="Max number of sensors (leave blank for all)"></i>
     </div>
 
     <div class="d-flex justify-content-center mt-2">
@@ -206,6 +208,11 @@
     <button onclick="purple_air.enable_form_input()">Enable Form</button> -->
 </div>
 
-
+<style>
+    .info-icon{
+        background: none;
+        border: 0;
+    }
+</style>
 </body>
 </html>
