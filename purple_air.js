@@ -14,8 +14,8 @@ function startCodapConnection() {
         title: "Purple Air Plugin",
         version: "001",
         dimensions: {
-            width: 380,
-            height: 800
+            width: 20vw,
+            height: 80vh
         },
         preventBringToFront: false,
     };
@@ -626,8 +626,8 @@ var purple_air = {
                 "dataContextName": "purple air",
                 "legendAttributeName": "Legend",
                 "dimensions": {
-                    width: 380,
-                    height: 380
+                    width: 20vw,
+                    height: 20vw
                 }
 
             }
@@ -646,8 +646,8 @@ var purple_air = {
                 type: "caseTable",
                 dataContext: datasetName,
                 "dimensions": {
-                    width: 1000,
-                    height: 800
+                    width: 50vw,
+                    height: 80vh
                 }
             }
         })
