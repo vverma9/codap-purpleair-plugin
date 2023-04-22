@@ -7,7 +7,7 @@ codappurpleairplugin project if you're on Mac or on Windows and how to create a 
 
 - The overview of the project is loacted in [README.md](https://github.com/Shubhangi0308/codappurpleairplugin#readme). Some useful documents.
 - [Link](https://drive.google.com/drive/u/0/folders/1gMZHDTfpOw7a9Ug0HqsD2LNzi8lKEDoD) to all CODAP plugin files.
-- to run this project, you need to start the local server on your system. 
+- To run this project, you need to start the local server on your system. 
 
 ## How to Contribute, if you're on Mac <!-- omit in toc -->
 
