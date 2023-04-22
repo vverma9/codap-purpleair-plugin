@@ -1,5 +1,4 @@
 # codappurpleairplugin
-## codappurpleairplugin
 
 Link to codap [source repo](https://github.com/concord-consortium/codap/wiki/CODAP-Data-Interactive-Plugin-API), [examples](https://github.com/concord-consortium/codap-data-interactives) and [tutorial](https://docs.google.com/document/d/1n1ebVKGliXfnTgRns4gtPw2bP6J41XMht2bNMMcAw9o/edit#).
 Main branch is automatically deployed [here](https://vverma9.github.io/codappurpleairplugin/) using the github pages, therefore please create a PR instead of directly committing your code in main. 
