@@ -91,7 +91,7 @@ async function getThingSpeakData(purpleAirData){
                 delete element.field4
                 delete element.field5
 
-                element["Temperature"] = element.field6
+                element["Temperature"] = element.field6 + " °F"
                 element["Humidity"] = element.field7
                 element["PM 2.5"] = element.field8
                 element["PM 10.0"] = element.field3
