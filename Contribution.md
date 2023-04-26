@@ -49,7 +49,7 @@ codappurpleairplugin project if you're on Mac or on Windows and how to create a 
 ## How to create a PR <!-- omit in toc -->
 
 1. Once you're final with your changes, just fork the main repository from [HERE](https://github.com/vverma9/codappurpleairplugin) into your github account. 
-2. Make all those changes again on your Github. Or you can even make changes locally by downloading the code, making changes locally, commiting all the chnages and pushing the code back to your github repository. 
+2. Make all those changes again on your Github. Or you can even make changes locally by downloading the code, making changes locally, commiting all the changes and pushing the code back to your github repository. 
 3. Once the changes are committed, create a pull request from the base repository *i.e* from where you have forked.
 4. View all your changes, if all good create the pull request. 
 
