@@ -25,7 +25,7 @@ codappurpleairplugin project if you're on Mac or on Windows and how to create a 
 
 1. Open the Terminal on Mac.
 2. Type the below commands. 
-   - cd ~/Desktop/*folder_name* (*e.g.* cd ~/Desktop/oss). Include your own folder_name where you stored the "**codap**" and "**codapPlugins**" files. As i stored in oss folder so I gave oss in folder name. Also I created my folder in Desktop, so I gave Desktop, If you created in Downloads or any where in Users then give that name. 
+   - cd ~/Desktop/*folder_name*. Include your own folder_name where you stored the "**codap**" and "**codapPlugins**" files. For example, if you created a folder named "my-project" on your Desktop to store the CODAP and CODAP Plugins files, the command would be "cd ~/Desktop/my-project". If you created in Downloads or any where in Users then give that name. 
    - python3 -m http.server 8080.
      -  It is not mandatory to take port 8080. It might be possible that port 8080 can be occupied by other processes. So if 8080 does not work try to take other ports as 80.
 3. Once you paste those two commands. You will see something like this "Serving HTTP on :: port 8080 (http://[::]:8080/) ..." which means that local server has started. 
@@ -44,6 +44,32 @@ codappurpleairplugin project if you're on Mac or on Windows and how to create a 
 
 
 ## How to Contribute, if you're on Windows <!-- omit in toc -->
+
+
+1.	Create a new folder with any name you prefer on your desktop or in any location that is convenient for you.
+2.	Download the [CODAP Plugin files](https://drive.google.com/drive/u/0/folders/1gMZHDTfpOw7a9Ug0HqsD2LNzi8lKEDoD). There are two files you need to download:             "**codap**" and "**codapPlugins**". Save both files into the new folder you created.
+3.	Download the code from the GitHub page: 
+    - Click on the [GITHUB Page](https://github.com/vverma9/codappurpleairplugin) link for the project. 
+    - Once you're on the GitHub repository page, click on the "**Code**" button and then click on "**Download ZIP**". 
+    - Once the ZIP file is downloaded, extract its contents into the new folder you created. 
+    - Rename the extracted folder to "**codappurpleairplugin**". 
+    - Move the "**codappurpleairplugin**" folder into the "**codapPlugins**" folder so that it is connected with the CODAP plugins. Once this is done, you should see         three folders in your new folder: "**codap**", "**codapPlugins**", and "**codappurpleairplugin**".
+4. Make the desired changes to the files inside the "codappurpleairplugin" folder, being careful not to accidentally delete or modify anything important.
+5. #### Start a local server on your Windows machine by following these steps: 
+    - Open the Command Prompt by typing "cmd" in the Windows search bar and clicking on "Command Prompt". 
+    - Navigate to the directory where you saved your new folder using the "cd" command. For example, if your new folder is on your desktop and named "my-project", you       would type: cd C:\Users\YourUserName\Desktop\my-project 
+    - Once you're in the correct directory, type the command "python -m http.server 8080" to start the local server. This will serve the files in the current directory       on port 8080. You will see a message in the Command Prompt indicating that the local server has started ("Serving HTTP on :: port 8080 (http://[::]:8080/)             ..."). 
+    - Once the local server is running, open your web browser (such as Chrome or Firefox) and go to the following URL:                                          http://localhost:8080/*FOLDER_NAME*/codap/static/dg/en/cert/index.html?di=http://localhost:8080/*FOLDER_NAME*/codapPlugins/codappurpleairplugin/index.html
+   
+        * Replace FOLDER_NAME with the name of the folder you created earlier.
+        * If you used a different port number, replace "8080" with that number in the URL. e. The web page that loads should display the changes you made to the files           in the "codappurpleairplugin" folder.
+6. Once you're done making changes, close the Command Prompt and terminate the local server by pressing "Ctrl + C" in the Command Prompt window.
+7. If you want to make additional changes, be sure to terminate the local server before making changes and start the server again afterwards. Otherwise, your changes may not be visible in the browser.
+
+### *Note* 
+* If you encounter any issues during the process, try restarting the local server or checking that you followed each step correctly. If the problem persists, seek help from the project's documentation or support resources.
+
+
 
 
 ## How to create a PR <!-- omit in toc -->
