@@ -506,7 +506,7 @@ var purple_air = {
                         // "entry_id": index,
                         "created_at": dateObj.toISOString(),
                         "Humidity": element[1],
-                        "Temperature": element[2],
+                        "Temperature": element[2] + " °F",
                         "PM 2.5": element[3],
                         "PM 10.0": element[4],
                         "AQI": purple_air.getAQIfromPM(element[4]),
@@ -851,21 +851,21 @@ purple_air.dataSetDescription = {
             },
             {
                 name: "Temperature",
-                type: 'numeric',
-                precision: 3,
+                type: 'text',
+                //precision: 3,
                 description: "estimated value"
             },
             {
                 name: "PM 10.0",
                 type: 'numeric',
                 precision: 3,
-                description: "estimated value of pm 10.0"
+                description: "estimated value of Particulate Matter 10.0"
             },
             {
                 name: "PM 2.5",
                 type: 'numeric',
                 precision: 3,
-                description: "estimated value of pm 2.5"
+                description: "estimated value of Particulate Matter 2.5"
             },
             {
                 name: "AQI",
