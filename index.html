@@ -52,7 +52,9 @@
             style="width:fit-content;"
             aria-label="Enter Your City Name"
             aria-describedby="cityHelp"
-            > 
+            >
+            <!-- hover icon for City field --> 
+            <i class="input-group-text info-icon bi bi-info-circle" data-toggle="tooltip" title="City Name"></i>
     </div>
     
     <!-- lat, long -->
@@ -69,7 +71,9 @@
         onchange="
         console.log('Lat, Long Updated ==> ' + this.value)
         "
-        readonly>  
+        readonly>
+        <!-- hover icon for Location field --> 
+        <i class="input-group-text info-icon bi bi-info-circle" data-toggle="tooltip" title="Latitude, Longitude"></i>  
     </div>  
 
     <div class="d-flex justify-content-center mt-2">
@@ -86,7 +90,7 @@
         <input  
         type="range" 
         class="form-control bg-info mr-1" 
-        min="10" max="100" value="10" id="radiusRange"
+        min="1" max="100" value="1" id="radiusRange"
         oninput="this.nextElementSibling.value = this.value"
         onchange="purple_air.changeRadius(this.value);
         console.log('Radius Updated ==> ' + this.value);
@@ -94,7 +98,9 @@
 
         "
         >
-        <output id="radiusText" class="input-group-text">10</output>
+        <output id="radiusText" class="input-group-text">1</output>
+        <!-- hover icon for Radius field --> 
+        <i class="input-group-text info-icon bi bi-info-circle" data-toggle="tooltip" title="Radius in Miles"></i>
     </div>
 
     <!-- start date selection -->
@@ -105,13 +111,14 @@
             type="date" 
             id="startDate" 
             name="startDate"
-            value="" min="" max=""
+            value="" min="" 
             onchange="
             purple_air.state.startDate = this.value;
             purple_air.hideError()
             console.log('Start Date Updated ==> ' + this.value)
             "
         >
+        <i class="input-group-text info-icon bi bi-info-circle" data-toggle="tooltip" title="Start Date"></i>
         
     </div>
 
@@ -124,13 +131,13 @@
             id="endDate" 
             name="endDate"    
             min="" value=""
-            max=""
             onchange="
             purple_air.state.endDate = this.value;
             purple_air.hideError();
             console.log('End date updated ==> ' + this.value)
             "
         >
+        <i class="input-group-text info-icon bi bi-info-circle" data-toggle="tooltip" title="End Date"></i>
         
     </div>
 
@@ -154,6 +161,7 @@
             <option value="360">360 (6 hour)</option>
             <option value="1440">1440 (1 day)</option>
           </select>
+          <i class="input-group-text info-icon bi bi-info-circle" data-toggle="tooltip" title="Average Minutes"></i>
     </div>
 
     <div class="input-group mt-2">        
@@ -215,4 +223,19 @@
     }
 </style>
 </body>
+
+<!-- 
+To disable future date selection in the start and end dates
+-->
+<script>
+window.onload=function(){
+    var date = new Date()
+    var year = date.toLocaleString("default", { year: "numeric" });
+    var month = date.toLocaleString("default", { month: "2-digit" });
+    var day = date.toLocaleString("default", { day: "2-digit" });
+    var today = year + "-" + month + "-" + day;
+    document.getElementsByName("startDate")[0].setAttribute('max', today);
+    document.getElementsByName("endDate")[0].setAttribute('max', today);
+}
+</script> 
 </html>
