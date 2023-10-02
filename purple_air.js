@@ -518,7 +518,7 @@ var purple_air = {
                         // "entry_id": index,
                         "created_at": dateObj.toISOString(),
                         "Humidity": element[1],
-                        "Temperature": element[2],
+                        "Temperature (in °F)": element[2],
                         "PM 2.5": element[3],
                         "PM 10.0": element[4],
                         "AQI": purple_air.getAQIfromPM(element[4]),
