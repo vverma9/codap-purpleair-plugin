@@ -6,3 +6,4 @@
 4. Provide defaults for both the averaging time period and the maximum number of sensors. I would suggest 5 for the latter. - Average minutes are set to 30 minutes by default and maximum sensors to 5.
 5. If the user has not changed the averaging time period, adjust it dynamically based on their date range; e.g. if the time period is 1 day, the averaging time period might be 10 minutes, and if the user changes the date range to more than a week, it might be 1 hour. - Done, also added case if nothing was in the defined range.
 6. Add units for Temperature. Added in the fix for point #3.
+7. Since many location names have multiple locations, use type ahead to allow user to disambiguate. See the NOAA Weather plugin and its code base for this. - Added autofill to the city input field and auto populate needed details
