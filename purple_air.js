@@ -1,6 +1,8 @@
 var milesToKms = 1.60934
 const myMAP = "my_location_map"
 const default_radius_value = 10;
+const default_average_minutes = 30;
+const default_max_sensors = 5;
 
 const timezone = "America/Phoenix"
 
@@ -461,8 +463,8 @@ var purple_air = {
             sensorValues.push(newRow)
 
             // Keep count of the sensor records read and terminate if max cap is reached
-            recordsCount = recordsCount + 1; 
-            if(totalReqSensors > 0 && recordsCount >= totalReqSensors){
+            recordsCount = recordsCount + 1;
+            if (totalReqSensors > 0 && recordsCount >= totalReqSensors) {
                 break;
             }
         }
@@ -516,7 +518,7 @@ var purple_air = {
                         // "entry_id": index,
                         "created_at": dateObj.toISOString(),
                         "Humidity": element[1],
-                        "Temperature": element[2] + " °F",
+                        "Temperature": element[2],
                         "PM 2.5": element[3],
                         "PM 10.0": element[4],
                         "AQI": purple_air.getAQIfromPM(element[4]),
@@ -590,15 +592,16 @@ var purple_air = {
      * @returns a bounding box array lat min, long max, lat max, long min (adjusted according to the purple air api results)
      */
     getBoundsFromLatLong: function (lat, long, radiusInKms) {
-        var lat_change = radiusInKms / 111.2
-        var long_change = Math.abs(Math.cos(lat * (Math.PI / 180)))
+        var lat_change = radiusInKms / 111.2;
+        var long_change = radiusInKms / (111.2 * Math.cos(lat * (Math.PI / 180)));
 
         var bounds = {
             lat_min: lat - lat_change,
             long_max: long + long_change,
             lat_max: lat + lat_change,
             long_min: long - long_change
-        }
+        };
+
         // console.log(bounds)
         return [
             bounds.lat_min,
@@ -709,8 +712,8 @@ purple_air.state = {
     radiusInMiles: default_radius_value,
     startDate: "",
     endDate: "",
-    averaginMinutes: 0,
-    sensorNum: 0
+    averaginMinutes: default_average_minutes,
+    sensorNum: default_max_sensors
 };
 
 purple_air.default = {
@@ -723,8 +726,8 @@ purple_air.default = {
     radiusInMiles: default_radius_value,
     startDate: "",
     endDate: "",
-    averaginMinutes: 0,
-    sensorNum: 0
+    averaginMinutes: default_average_minutes,
+    sensorNum: default_max_sensors
 }
 
 // purple_air.state = {
@@ -862,7 +865,7 @@ purple_air.dataSetDescription = {
                 description: "estimated value"
             },
             {
-                name: "Temperature",
+                name: "Temperature (in °F)",
                 type: 'text',
                 //precision: 3,
                 description: "estimated value"
@@ -890,3 +893,24 @@ purple_air.dataSetDescription = {
         }
     ]
 };
+
+// Updating average minutes based on the start and end dates
+purple_air.updateAveragingMinutes = function () {
+    var startDate = new Date(document.getElementById('startDate').value);
+    var endDate = new Date(document.getElementById('endDate').value);
+
+    if (startDate && endDate && !isNaN(startDate) && !isNaN(endDate)) {
+        var timeDifference = Math.abs(endDate.getTime() - startDate.getTime());
+        var daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+        // Update default value based on days difference
+        var averagingMinutesSelect = document.getElementById('minutes');
+        if (daysDifference <= 1) {
+            averagingMinutesSelect.value = '10';
+        } else if (daysDifference > 7) {
+            averagingMinutesSelect.value = '60';
+        } else {
+            // Set the default value to 30 or any other value as needed
+        }
+    }
+}
