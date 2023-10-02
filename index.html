@@ -60,39 +60,67 @@
         );
       });
 
-      document.addEventListener("DOMContentLoaded", function () {
-        // Get the input element
-        const cityInput = document.getElementById("city_input");
 
-        // Add an event listener for input changes
-        cityInput.addEventListener("input", function () {
-          const inputValue = cityInput.value.trim();
+      //Javascript to auto fill the city names
+      $(document).ready(function () {
+        const inputField = $("#city_input");
+        const resultsList = $("#autocomplete-results");
 
-          // Only make the API request if there's a non-empty input
+        inputField.on("input", function () {
+          const inputValue = inputField.val().trim();
+
           if (inputValue !== "") {
-            // Make the API request to Geoapify
             const apiUrl = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(
               inputValue
-            )}&apiKey=1b48259b810e48ddb151889f9ea58db0&type=locality&limit=5`;
+            )}&apiKey=1b48259b810e48ddb151889f9ea58db0&type=city&lang=en&filter=countrycode:us&limit=5`;
 
-            // Use jQuery to make an AJAX request
             $.ajax({
               url: apiUrl,
               method: "GET",
               success: function (data) {
-                // For simplicity, let's assume the API response is an array of suggestions
-                const suggestions = data.features.map(
-                  (feature) => feature.properties.formatted
-                );
-
-                // Update your UI with the suggestions (you may use a dropdown, etc.)
-                console.log("Suggestions:", suggestions);
+                updateDropdown(data.features);
               },
               error: function (error) {
                 console.error("Error fetching suggestions:", error);
               },
             });
+          } else {
+            // If the input is empty, hide the dropdown
+            resultsList.hide();
           }
+        });
+
+        function updateDropdown(suggestions) {
+          resultsList.empty(); // Clear existing dropdown options
+
+          suggestions.forEach((suggestion) => {
+            const listItem = $("<li>").text(`${suggestion.properties.city}, ${suggestion.properties.state_code}`);
+
+            // Add click event to select the suggestion
+            listItem.on("click", function () {
+              let radiusInMiles = document.getElementById("radiusRange").value
+              let city = suggestion.properties.city
+              let state = suggestion.properties.state_code
+              let zip = suggestion.properties.postcode || 0
+              let lat = suggestion.properties.lat
+              let long = suggestion.properties.lon
+              let bounding_box = purple_air.getBoundsFromLatLong(lat, long, radiusInMiles * milesToKms)
+              
+              inputField.val(`${city}, ${state}`);
+              document.getElementById('lat_long_input').value = `${lat}, ${long}`
+              purple_air.save_state(city, state, zip, lat, long, bounding_box);
+              resultsList.hide();
+            });
+
+            resultsList.append(listItem);
+          });
+
+          resultsList.show();
+        }
+
+        // Hide the dropdown when clicking outside the container
+        $(document).on("click", function (event) {
+          resultsList.hide();
         });
       });
     </script>
@@ -113,6 +141,7 @@
           aria-label="Enter Your City Name"
           aria-describedby="cityHelp"
         />
+        <ul id="autocomplete-results"></ul>
         <!-- hover icon for City field -->
         <i
           class="input-group-text info-icon bi bi-info-circle"
