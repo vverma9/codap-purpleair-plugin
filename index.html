@@ -9,11 +9,14 @@
 
     <script src="jquery.js" language="javascript"></script>
     <script src="snap.svg.js" language="javascript"></script>
-
     <script src="iframe-phone.js" language="JavaScript"></script>
     <script src="CodapInterface.js" language="JavaScript"></script>
-
     <script src="pluginHelper.js" language="JavaScript"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 
     <link rel="stylesheet" href="helper.css" />
 
@@ -24,6 +27,7 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
@@ -31,12 +35,65 @@
 
     <!-- jquery cdn -->
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>  -->
-
     <script src="purple_air.js" language="JavaScript"></script>
 
     <script>
       $(function () {
         startCodapConnection();
+      });
+
+      // JavaScript to initialize and show tooltip on hover
+      $(document).ready(function () {
+        $(".info-icon").tooltip({
+          trigger: "manual", // Set trigger to 'manual'
+        });
+
+        $(".info-icon").hover(
+          function () {
+            // Show the tooltip when hovering
+            $(this).tooltip("show");
+          },
+          function () {
+            // Hide the tooltip when not hovering
+            $(this).tooltip("hide");
+          }
+        );
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get the input element
+        const cityInput = document.getElementById("city_input");
+
+        // Add an event listener for input changes
+        cityInput.addEventListener("input", function () {
+          const inputValue = cityInput.value.trim();
+
+          // Only make the API request if there's a non-empty input
+          if (inputValue !== "") {
+            // Make the API request to Geoapify
+            const apiUrl = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(
+              inputValue
+            )}&apiKey=1b48259b810e48ddb151889f9ea58db0&type=locality&limit=5`;
+
+            // Use jQuery to make an AJAX request
+            $.ajax({
+              url: apiUrl,
+              method: "GET",
+              success: function (data) {
+                // For simplicity, let's assume the API response is an array of suggestions
+                const suggestions = data.features.map(
+                  (feature) => feature.properties.formatted
+                );
+
+                // Update your UI with the suggestions (you may use a dropdown, etc.)
+                console.log("Suggestions:", suggestions);
+              },
+              error: function (error) {
+                console.error("Error fetching suggestions:", error);
+              },
+            });
+          }
+        });
       });
     </script>
   </head>
@@ -310,23 +367,5 @@ To disable future date selection in the start and end dates
       document.getElementsByName("startDate")[0].setAttribute("max", today);
       document.getElementsByName("endDate")[0].setAttribute("max", today);
     };
-
-    // JavaScript to initialize and show tooltip on hover
-    $(document).ready(function () {
-      $(".info-icon").tooltip({
-        trigger: "manual", // Set trigger to 'manual'
-      });
-
-      $(".info-icon").hover(
-        function () {
-          // Show the tooltip when hovering
-          $(this).tooltip("show");
-        },
-        function () {
-          // Hide the tooltip when not hovering
-          $(this).tooltip("hide");
-        }
-      );
-    });
   </script>
 </html>
