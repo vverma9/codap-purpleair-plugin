@@ -14,10 +14,10 @@ var requestOptions = {
 function startCodapConnection() {
     var config = {
         title: "Purple Air Plugin",
-        version: "001",
+        version: "v0002",
         dimensions: {
             width: 380,
-            height: 800
+            height: 490
         },
         preventBringToFront: false,
     };
@@ -134,49 +134,49 @@ var purple_air = {
         document.getElementById("sensor_input").value = ""
     },
 
-    clearLocationState: function () {
-        purple_air.state.city = ""
-        purple_air.state.state = ""
-        purple_air.state.zip = ""
-    },
+    // clearLocationState: function () {
+    //     purple_air.state.city = ""
+    //     purple_air.state.state = ""
+    //     purple_air.state.zip = ""
+    // },
 
-    clearLatLongBoundingState: function () {
-        purple_air.state.latitude = 0.00
-        purple_air.state.longitude = 0.00
-        purple_air.state.city = []
-    },
-    clearStartDateState: function () { },
-    clearEndDateState: function () { },
+    // clearLatLongBoundingState: function () {
+    //     purple_air.state.latitude = 0.00
+    //     purple_air.state.longitude = 0.00
+    //     purple_air.state.city = []
+    // },
+    // clearStartDateState: function () { },
+    // clearEndDateState: function () { },
 
 
-    clearLocation: function () {
-        purple_air.setLocationValue()
-        purple_air.setLatLongValue()
-        purple_air.clearLocationState()
-        purple_air.clearLatLongBoundingState()
+    // clearLocation: function () {
+    //     purple_air.setLocationValue()
+    //     purple_air.setLatLongValue()
+    //     purple_air.clearLocationState()
+    //     purple_air.clearLatLongBoundingState()
 
-        console.info(`location Info Cleared ${purple_air.state}`)
-    },
+    //     console.info(`location Info Cleared ${purple_air.state}`)
+    // },
 
-    reset: function () {
-        purple_air.setLocationValue()
-        purple_air.setLatLongValue()
+    // reset: function () {
+    //     purple_air.setLocationValue()
+    //     purple_air.setLatLongValue()
 
-        purple_air.setRadiusValue()
+    //     purple_air.setRadiusValue()
 
-        purple_air.setStartDate()
-        purple_air.setEndDate()
+    //     purple_air.setStartDate()
+    //     purple_air.setEndDate()
 
-        purple_air.setMinutesValue()
+    //     purple_air.setMinutesValue()
 
-        purple_air.setSensorNum()
+    //     purple_air.setSensorNum()
 
-        purple_air.state = {
-            ...purple_air.default
-        }
-        console.info('Form has been reset')
-        console.info(purple_air.state)
-    },
+    //     purple_air.state = {
+    //         ...purple_air.default
+    //     }
+    //     console.info('Form has been reset')
+    //     console.info(purple_air.state)
+    // },
 
     save_state: async function (city, state, zip, lat, long, bounding_box) {
         purple_air.state.city = await city
@@ -192,53 +192,53 @@ var purple_air = {
     },
 
 
-    searchLocation: async function () {
-        // console.log('search for location')
-        let search = document.getElementById("city_input").value
-        // document.getElementById("city_input").value = "Fetching"
+    // searchLocation: async function () {
+    //     // console.log('search for location')
+    //     let search = document.getElementById("city_input").value
+    //     // document.getElementById("city_input").value = "Fetching"
 
-        if (search === "") {
-            console.log('inside')
-            document.getElementById("msg").innerText = "Please enter city name to search for"
-            document.getElementById("msg").style.display = "block"
-        } else {
-            document.getElementById("lat_long_input").value = "Fetching"
-            document.getElementById("msg").style.display = "none"
-            console.info('Searching Location ==> ' + search)
+    //     if (search === "") {
+    //         console.log('inside')
+    //         document.getElementById("msg").innerText = "Please enter city name to search for"
+    //         document.getElementById("msg").style.display = "block"
+    //     } else {
+    //         document.getElementById("lat_long_input").value = "Fetching"
+    //         document.getElementById("msg").style.display = "none"
+    //         console.info('Searching Location ==> ' + search)
 
-            let base_url = `https://api.geoapify.com/v1/geocode/autocomplete?apiKey=cd1a1690ccd74ab1ba583af1dd732ec5&text=` + search + `&type=city&lang=en&filter=countrycode:us&format=json`
-            // reverse geocoding api call to geoapify
-            // console.log(base_url)
+    //         let base_url = `https://api.geoapify.com/v1/geocode/autocomplete?apiKey=cd1a1690ccd74ab1ba583af1dd732ec5&text=` + search + `&type=city&lang=en&filter=countrycode:us&format=json`
+    //         // reverse geocoding api call to geoapify
+    //         // console.log(base_url)
 
-            await fetch(base_url, requestOptions)
-                .then(response => response.json())
-                .then(response => {
+    //         await fetch(base_url, requestOptions)
+    //             .then(response => response.json())
+    //             .then(response => {
 
-                    let result = response.results[0]
-                    let radiusInMiles = document.getElementById("radiusRange").value
-                    let city = result.city
-                    let state = result.state_code
-                    let zip = result.postcode || 0
-                    let lat = result.lat
-                    let long = result.lon
-                    let bounding_box = purple_air.getBoundsFromLatLong(lat, long, radiusInMiles * milesToKms)
+    //                 let result = response.results[0]
+    //                 let radiusInMiles = document.getElementById("radiusRange").value
+    //                 let city = result.city
+    //                 let state = result.state_code
+    //                 let zip = result.postcode || 0
+    //                 let lat = result.lat
+    //                 let long = result.lon
+    //                 let bounding_box = purple_air.getBoundsFromLatLong(lat, long, radiusInMiles * milesToKms)
 
-                    fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${long}&apiKey=cd1a1690ccd74ab1ba583af1dd732ec5`,
-                        requestOptions)
-                        .then(response => response.json())
-                        .then(result => zip = result.features[0].properties.postcode)
-                        .catch(error => console.log('error', error));
+    //                 fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${long}&apiKey=cd1a1690ccd74ab1ba583af1dd732ec5`,
+    //                     requestOptions)
+    //                     .then(response => response.json())
+    //                     .then(result => zip = result.features[0].properties.postcode)
+    //                     .catch(error => console.log('error', error));
 
-                    setTimeout(() => {
-                        purple_air.save_state(city, state, zip, lat, long, bounding_box)
-                        document.getElementById('lat_long_input').value = `${lat}, ${long}`
-                        document.getElementById('city_input').value = `${city}, ${state}`
-                    }, 500);
+    //                 setTimeout(() => {
+    //                     purple_air.save_state(city, state, zip, lat, long, bounding_box)
+    //                     document.getElementById('lat_long_input').value = `${lat}, ${long}`
+    //                     document.getElementById('city_input').value = `${city}, ${state}`
+    //                 }, 500);
 
-                })
-                .catch(error => console.log('error', error));
-        }
-    },
+    //             })
+    //             .catch(error => console.log('error', error));
+    //     }
+    // },
 
     getFormData: function () {
         // data = {}
@@ -286,26 +286,26 @@ var purple_air = {
 
         document.getElementById("city_input").disabled = "disabled"
         // document.getElementById("lat_long_input").disabled = "disabled"
-        document.getElementById("clearLocation").disabled = "disabled"
-        document.getElementById("searchLocation").disabled = "disabled"
+        // document.getElementById("clearLocation").disabled = "disabled"
+        // document.getElementById("searchLocation").disabled = "disabled"
         document.getElementById("radiusRange").disabled = "disabled"
         document.getElementById("startDate").disabled = "disabled"
         document.getElementById("endDate").disabled = "disabled"
         document.getElementById("minutes").disabled = "disabled"
-        document.getElementById("reset").disabled = "disabled"
+        // document.getElementById("reset").disabled = "disabled"
         document.getElementById("getPurpleAirData").disabled = "disabled"
     },
     enable_form_input: function () {
         document.getElementById("spinner").style.display = 'none'
         document.getElementById("city_input").disabled = ""
         // document.getElementById("lat_long_input").disabled = True
-        document.getElementById("clearLocation").disabled = ""
-        document.getElementById("searchLocation").disabled = ""
+        // document.getElementById("clearLocation").disabled = ""
+        // document.getElementById("searchLocation").disabled = ""
         document.getElementById("radiusRange").disabled = ""
         document.getElementById("startDate").disabled = ""
         document.getElementById("endDate").disabled = ""
         document.getElementById("minutes").disabled = ""
-        document.getElementById("reset").disabled = ""
+        // document.getElementById("reset").disabled = ""
         document.getElementById("getPurpleAirData").disabled = ""
     },
 
@@ -772,7 +772,7 @@ purple_air.default = {
  * @type
  */
 purple_air.constants = {
-    version: "001"
+    version: "v0002"
 };
 
 
