@@ -93,28 +93,33 @@
         function updateDropdown(suggestions) {
           resultsList.empty(); // Clear existing dropdown options
 
-          suggestions.forEach((suggestion) => {
-            const listItem = $("<li>").text(`${suggestion.properties.city}, ${suggestion.properties.state_code}`);
+          if (suggestions.length > 0) {
+            suggestions.forEach((suggestion) => {
+              const listItem = $("<li>").text(`${suggestion.properties.city}, ${suggestion.properties.state_code}`);
 
-            // Add click event to select the suggestion
-            listItem.on("click", function () {
-              let radiusInMiles = document.getElementById("radiusRange").value
-              let city = suggestion.properties.city
-              let state = suggestion.properties.state_code
-              let zip = suggestion.properties.postcode || 0
-              let lat = suggestion.properties.lat
-              let long = suggestion.properties.lon
-              let bounding_box = purple_air.getBoundsFromLatLong(lat, long, radiusInMiles * milesToKms)
-              
-              inputField.val(`${city}, ${state}`);
-              document.getElementById('lat_long_input').value = `${lat}, ${long}`
-              purple_air.save_state(city, state, zip, lat, long, bounding_box);
-              resultsList.hide();
+              // Add click event to select the suggestion
+              listItem.on("click", function () {
+                let radiusInMiles = document.getElementById("radiusRange").value
+                let city = suggestion.properties.city
+                let state = suggestion.properties.state_code
+                let zip = suggestion.properties.postcode || 0
+                let lat = suggestion.properties.lat
+                let long = suggestion.properties.lon
+                let bounding_box = purple_air.getBoundsFromLatLong(lat, long, radiusInMiles * milesToKms)
+                
+                inputField.val(`${city}, ${state}`);
+                document.getElementById('lat_long_input').value = `${lat}, ${long}`
+                purple_air.save_state(city, state, zip, lat, long, bounding_box);
+                resultsList.hide();
+              });
+
+              resultsList.append(listItem);
             });
-
+          } else {
+            const listItem = $("<li>").text(`No city is found with the search term!`);
             resultsList.append(listItem);
-          });
-
+          }
+          
           resultsList.show();
         }
 
@@ -146,7 +151,7 @@
         <i
           class="input-group-text info-icon bi bi-info-circle"
           data-toggle="tooltip"
-          title="City Name"
+          title="The name of the city where sensors are to be located. The sensors nearest this city will be the ones chosen."
         ></i>
       </div>
 
@@ -170,12 +175,12 @@
         <i
           class="input-group-text info-icon bi bi-info-circle"
           data-toggle="tooltip"
-          title="Latitude, Longitude"
+          title="The Latitude and Longitude of the location of interest."
         ></i>
       </div>
 
-      <div class="d-flex justify-content-center mt-2">
-        <!-- <button id="fetchMyLocation" onclick="purple_air.fetchLocation()" class="btn btn-info mr-2 small">Fetch my location</button> -->
+      <!-- <button id="fetchMyLocation" onclick="purple_air.fetchLocation()" class="btn btn-info mr-2 small">Fetch my location</button> -->
+      <!-- <div class="d-flex justify-content-center mt-2">
         <button
           id="clearLocation"
           onclick="purple_air.clearLocation()"
@@ -190,7 +195,7 @@
         >
           Search Location
         </button>
-      </div>
+      </div> -->
 
       <!-- Radius -->
       <div class="input-group mt-2">
@@ -216,7 +221,7 @@
         <i
           class="input-group-text info-icon bi bi-info-circle"
           data-toggle="tooltip"
-          title="Radius in Miles"
+          title="Enter the radius in miles and sensors within this area will be chosen."
         ></i>
       </div>
 
@@ -241,7 +246,7 @@
         <i
           class="input-group-text info-icon bi bi-info-circle"
           data-toggle="tooltip"
-          title="Start Date"
+          title="Enter the date when you want to start collecting the data."
         ></i>
       </div>
 
@@ -266,7 +271,7 @@
         <i
           class="input-group-text info-icon bi bi-info-circle"
           data-toggle="tooltip"
-          title="End Date"
+          title="Enter the date when you want to end collecting the data."
         ></i>
       </div>
 
@@ -297,7 +302,7 @@
         <i
           class="input-group-text info-icon bi bi-info-circle"
           data-toggle="tooltip"
-          title="Average Minutes"
+          title="What is the time interval for the data in minutes(1 day = 1440 minutes)."
         ></i>
       </div>
 
@@ -326,13 +331,13 @@
       </div>
 
       <div class="d-flex justify-content-center mt-2">
-        <button
+        <!-- <button
           id="reset"
           onclick="purple_air.reset()"
           class="btn btn-outline-danger mt-2 mr-2"
         >
           Reset Form Data
-        </button>
+        </button> -->
 
         <button
           id="getPurpleAirData"

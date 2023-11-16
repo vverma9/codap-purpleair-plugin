@@ -25,3 +25,7 @@
 #autocomplete-results li:hover {
   background-color: #f2f2f2;
 }
+
+.wx-pop-up {
+  display: none;
+}
