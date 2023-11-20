@@ -17,7 +17,7 @@ function startCodapConnection() {
         version: "v0002",
         dimensions: {
             width: 380,
-            height: 490
+            height: 500
         },
         preventBringToFront: false,
     };
