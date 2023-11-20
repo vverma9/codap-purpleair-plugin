@@ -452,7 +452,7 @@ var purple_air = {
 
         for (let d of data) {
             let newRow = { ...purple_air_fields }
-            newRow.Location = purple_air.state.city
+            newRow.Location = `${purple_air.state.city}, ${purple_air.state.state}`
             newRow.sensor_index = d[0]
             newRow.name = d[1]
             // newRow.primary_id_a =   d[2]
@@ -516,7 +516,7 @@ var purple_air = {
                     dateObj.setTime(element[0] * 1000)
                     answers.push({
                         // "entry_id": index,
-                        "created_at": dateObj.toISOString(),
+                        "Date and Time": dateObj.toISOString(),
                         "Humidity": element[1],
                         "Temperature (in °F)": element[2],
                         "PM 2.5": element[3],
@@ -528,6 +528,8 @@ var purple_air = {
             }
             i = i + 1
         }
+
+        answers.sort((a, b) => new Date(a["Date and Time"]) - new Date(b["Date and Time"]));
         return answers
 
     },
@@ -818,14 +820,14 @@ purple_air.dataSetDescription = {
 
             attrs: [
                 {
-                    name: "sensor_index",
-                    type: 'numeric',
-                    description: "Sensors id"
-                },
-                {
                     name: "name",
                     type: 'categorical',
                     description: "Sensors Name"
+                },
+                {
+                    name: "sensor_index",
+                    type: 'numeric',
+                    description: "Sensors id"
                 },
                 {
                     name: "latitude",
@@ -837,12 +839,12 @@ purple_air.dataSetDescription = {
                     type: 'numeric',
                     description: "sensor's longitude"
                 }
-                ,
-                {
-                    name: "elevation",
-                    type: 'numeric',
-                    description: "sensor's elevation"
-                },
+                // ,
+                // {
+                //     name: "elevation",
+                //     type: 'numeric',
+                //     description: "sensor's elevation"
+                // },
             ]
         },
         {
@@ -854,21 +856,15 @@ purple_air.dataSetDescription = {
                 "pluralCase": "measures"
             },
             "attrs": [{
-                name: "created_at",
+                name: "Date and Time",
                 type: 'date',
                 description: "date created data"
             },
             {
-                name: "Humidity",
+                name: "AQI",
                 type: 'numeric',
                 precision: 3,
-                description: "estimated value"
-            },
-            {
-                name: "Temperature (in °F)",
-                type: 'text',
-                //precision: 3,
-                description: "estimated value"
+                description: "Air Quality Index"
             },
             {
                 name: "PM 10.0",
@@ -883,13 +879,17 @@ purple_air.dataSetDescription = {
                 description: "estimated value of Particulate Matter 2.5"
             },
             {
-                name: "AQI",
+                name: "Humidity",
                 type: 'numeric',
                 precision: 3,
-                description: "Air Quality Index"
-            }
-
-            ]
+                description: "estimated value"
+            },
+            {
+                name: "Temperature (in °F)",
+                type: 'text',
+                //precision: 3,
+                description: "estimated value"
+            }]
         }
     ]
 };

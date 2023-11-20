@@ -19,15 +19,15 @@
 - “Radius Miles” should be “Radius in Miles”. - Done.
 - UX question: Is the Reset Form Data button necessary/useful? (Not to me.) - Done.
 - The case table created by the plugin should be the default size, not the vertically large size it currently is. - Done.
+- There should be information about the plugin and its data available in the plugin, perhaps as a separate “About” tab or, alternatively as is done in the NOAA Weather plugin with an overlay accessible through an info button. - Done.
+- I’ve never gotten any elevation data. Is that a bug or is there really none. If none, don’t add the attribute. - Removed the attribute, as the purple air API's don't give this data.
+- The Location attribute values should include the state name. - Done.
+- Isn’t AQI the most germane attribute? If so, place it before the two PM attributes. Consider placing all three of the air quality attributes before humidity and temperature. - Done.
+- Consider renaming “created at” to “Date and Time.” And the description should explain that it is (I think) the time at the beginning of the period of averaging. - Done.
+- The “created at” values are not sorted. They should be! - Done.
+- Put the sensor name attribute ahead of the sensor index attribute so that points will be more informatively labeled. - Done.
 
 - When a list of cities appears, arrow keys should allow navigation up and down the list with <return> or <enter> to select the city. - keyboard navigation not done yet.
 - sensor_index should be categorical, not numeric.
-- I’ve never gotten any elevation data. Is that a bug or is there really none. If none, don’t add the attribute.
-- Isn’t AQI the most germane attribute? If so, place it before the two PM attributes. Consider placing all three of the air quality attributes before humidity and temperature.
-- Consider renaming “created at” to “Date and Time.” And the description should explain that it is (I think) the time at the beginning of the period of averaging.
 - The Temperature attribute should be named simply “Temperature” and the units (°F) should be placed in the units field of the attribute description. (The plugin API allows for this.)
-- The “created at” values are not sorted. They should be!
-- The Location attribute values should include the state name.
-- Put the sensor name attribute ahead of the sensor index attribute so that points will be more informatively labeled.
 - Feature: When the Get Purple Air Data has been pressed, it should change say “Stop” and allow the user to stop the data gathering process.
-- There should be information about the plugin and its data available in the plugin, perhaps as a separate “About” tab or, alternatively as is done in the NOAA Weather plugin with an overlay accessible through an info button.
