@@ -11,7 +11,6 @@
 
 ### Testing results from 10/02/2023
 - Update the version number to ‘0002’ - Done.
-- It is not possible to close the plugin. Is that a deliberate design decision? It can be frustrating to users who are creating a document that they want to distribute, perhaps to students, without the plugin.
 - Adjust the vertical dimension of the plugin so that it is just tall enough to encompass the controls without very much extra space. - Done.
 - The hover tips for the “circle i” are just the same as the text prompts. They should contain additional information. For example, The City Name hover tip could be “The name of the city where sensors are to be located. The sensors nearest this city will be the ones chosen.” - Done.
 - Bug: When a city is not found, “Searching” appears and does not go away. There should be a timeout after which a message should appear indicating that the city could not be found. This could be a modal alert. - Done.
@@ -27,6 +26,7 @@
 - The “created at” values are not sorted. They should be! - Done.
 - Put the sensor name attribute ahead of the sensor index attribute so that points will be more informatively labeled. - Done.
 
+- It is not possible to close the plugin. Is that a deliberate design decision? It can be frustrating to users who are creating a document that they want to distribute, perhaps to students, without the plugin. - It is present
 - When a list of cities appears, arrow keys should allow navigation up and down the list with <return> or <enter> to select the city. - keyboard navigation not done yet.
 - sensor_index should be categorical, not numeric.
 - The Temperature attribute should be named simply “Temperature” and the units (°F) should be placed in the units field of the attribute description. (The plugin API allows for this.)
