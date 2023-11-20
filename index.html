@@ -60,7 +60,6 @@
         );
       });
 
-
       //Javascript to auto fill the city names
       $(document).ready(function () {
         const inputField = $("#city_input");
@@ -95,31 +94,49 @@
 
           if (suggestions.length > 0) {
             suggestions.forEach((suggestion) => {
-              const listItem = $("<li>").text(`${suggestion.properties.city}, ${suggestion.properties.state_code}`);
+              const listItem = $("<li>").text(
+                `${suggestion.properties.city}, ${suggestion.properties.state_code}`
+              );
 
               // Add click event to select the suggestion
               listItem.on("click", function () {
-                let radiusInMiles = document.getElementById("radiusRange").value
-                let city = suggestion.properties.city
-                let state = suggestion.properties.state_code
-                let zip = suggestion.properties.postcode || 0
-                let lat = suggestion.properties.lat
-                let long = suggestion.properties.lon
-                let bounding_box = purple_air.getBoundsFromLatLong(lat, long, radiusInMiles * milesToKms)
-                
+                let radiusInMiles =
+                  document.getElementById("radiusRange").value;
+                let city = suggestion.properties.city;
+                let state = suggestion.properties.state_code;
+                let zip = suggestion.properties.postcode || 0;
+                let lat = suggestion.properties.lat;
+                let long = suggestion.properties.lon;
+                let bounding_box = purple_air.getBoundsFromLatLong(
+                  lat,
+                  long,
+                  radiusInMiles * milesToKms
+                );
+
                 inputField.val(`${city}, ${state}`);
-                document.getElementById('lat_long_input').value = `${lat}, ${long}`
-                purple_air.save_state(city, state, zip, lat, long, bounding_box);
+                document.getElementById(
+                  "lat_long_input"
+                ).value = `${lat}, ${long}`;
+                purple_air.save_state(
+                  city,
+                  state,
+                  zip,
+                  lat,
+                  long,
+                  bounding_box
+                );
                 resultsList.hide();
               });
 
               resultsList.append(listItem);
             });
           } else {
-            const listItem = $("<li>").text(`No city is found with the search term!`);
+            const listItem = $("<li>").text(
+              `No city is found with the search term!`
+            );
             resultsList.append(listItem);
           }
-          
+
           resultsList.show();
         }
 
@@ -131,6 +148,52 @@
     </script>
   </head>
   <body>
+    <div class="container mt-4">
+      <div class="row align-items-center">
+        <div class="col-10">
+          <span>Retrieve weather data from observing stations.</span>
+        </div>
+        <div class="col-2">
+          <i
+            class="input-group-text info-icon bi bi-info-circle"
+            data-bs-toggle="modal"
+            data-bs-target="#creditsModal"
+          ></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="creditsModal"
+      tabindex="-1"
+      aria-labelledby="creditsModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="creditsModalLabel">About</h5>
+          </div>
+          <div class="modal-body">
+            <p>These Air Quality data come from the Purple Air data repository and can be accessed at https://map.purpleair.com/.</p>
+            <p>This plugin was developed by ASU Decision Theater and the Impactful Computing Lab at Northern Arizona University.</p>
+            <p>This material is based on work supported by the National Science Foundation under Grant No. ITEST-1949241. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the NSF.</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-primary mt-2"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container mt-4">
       <!-- <form class="" id="pap_form" action="#"> -->
 
