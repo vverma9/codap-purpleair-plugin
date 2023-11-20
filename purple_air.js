@@ -3,6 +3,8 @@ const myMAP = "my_location_map"
 const default_radius_value = 10;
 const default_average_minutes = 30;
 const default_max_sensors = 5;
+let stopApiCalls = false;
+let abortController = null; 
 
 const timezone = "America/Phoenix"
 
@@ -423,17 +425,6 @@ var purple_air = {
 
         const BASE_PURPLE_AIR_URL = `https://api.purpleair.com/v1/sensors?api_key=${api_key}&fields=${FIELDS_REQD}&selat=${selat}&selng=${selng}&nwlat=${nwlat}&nwlng=${nwlng}`
 
-        // let latLngList = []
-
-        // const purple_air_fields =   {
-        //     sensor_index: "",
-        //     name: "",
-        //     primary_id_a: "",
-        //     primary_key_a: "",
-        //     latitude: "",
-        //     longitude: ""
-        // }
-
         const purple_air_fields = {
             sensor_index: "",
             name: "",
@@ -447,31 +438,28 @@ var purple_air = {
 
         let data = fetch_purple_air.data
 
-        let totalReqSensors = purple_air.state.sensorNum || 0
-        let recordsCount = 0;
+            let totalReqSensors = purple_air.state.sensorNum || 0
+            let recordsCount = 0;
 
-        for (let d of data) {
-            let newRow = { ...purple_air_fields }
-            newRow.Location = `${purple_air.state.city}, ${purple_air.state.state}`
-            newRow.sensor_index = d[0]
-            newRow.name = d[1]
-            // newRow.primary_id_a =   d[2]
-            // newRow.primary_key_a =  d[3]
-            newRow.latitude = d[2]
-            newRow.longitude = d[3]
-            // latLngList.push( `${d[2]},${d[3]}` )
-            sensorValues.push(newRow)
+            for (let d of data) {
+                let newRow = { ...purple_air_fields }
+                newRow.Location = `${purple_air.state.city}, ${purple_air.state.state}`
+                newRow.sensor_index = d[0]
+                newRow.name = d[1]
+                newRow.latitude = d[2]
+                newRow.longitude = d[3]
+                sensorValues.push(newRow)
 
-            // Keep count of the sensor records read and terminate if max cap is reached
-            recordsCount = recordsCount + 1;
-            if (totalReqSensors > 0 && recordsCount >= totalReqSensors) {
-                break;
+                // Keep count of the sensor records read and terminate if max cap is reached
+                recordsCount = recordsCount + 1;
+                if (totalReqSensors > 0 && recordsCount >= totalReqSensors) {
+                    break;
+                }
             }
-        }
 
-        // if (flag === 1) {        console.log(sensorValues)        }
+            // if (flag === 1) {        console.log(sensorValues)        }
 
-        return sensorValues
+            return sensorValues
 
     },
 
@@ -489,6 +477,12 @@ var purple_air = {
         for (let sensor of purpleAirData) {
             purple_air.setSpinnerText(`Sensor ${i}/${n} - ${sensor.name}`)
             // console.log(sensor.name)
+
+            if (stopApiCalls) {
+                console.warn("API calls stopped by user");
+                stopApiCalls = false;
+                return answers;
+            }
 
             let dates = purple_air.getDaysArray(
                 (new Date(purple_air.state.startDate)),
@@ -532,6 +526,14 @@ var purple_air = {
         answers.sort((a, b) => new Date(a["Date and Time"]) - new Date(b["Date and Time"]));
         return answers
 
+    },
+
+    stopPurpleAirData: function () {
+        stopApiCalls = true;
+        if (abortController) {
+            abortController.abort();  // Abort ongoing fetch request
+            abortController = null;  // Reset AbortController
+        }
     },
 
     getPurpleAirData: async function () {

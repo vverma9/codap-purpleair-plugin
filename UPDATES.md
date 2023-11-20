@@ -27,7 +27,7 @@
 - Put the sensor name attribute ahead of the sensor index attribute so that points will be more informatively labeled. - Done.
 - It is not possible to close the plugin. Is that a deliberate design decision? It can be frustrating to users who are creating a document that they want to distribute, perhaps to students, without the plugin. - Done.
 - The Temperature attribute should be named simply “Temperature” and the units (°F) should be placed in the units field of the attribute description. (The plugin API allows for this.) - Done.
+- Feature: When the Get Purple Air Data has been pressed, it should change say “Stop” and allow the user to stop the data gathering process. - Done.
 
 - When a list of cities appears, arrow keys should allow navigation up and down the list with <return> or <enter> to select the city. - keyboard navigation not done yet.
 - sensor_index should be categorical, not numeric.
-- Feature: When the Get Purple Air Data has been pressed, it should change say “Stop” and allow the user to stop the data gathering process.
