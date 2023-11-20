@@ -18,7 +18,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" href="helper.css" />
 
     <!-- bootstrap for html beautification -->
     <link
@@ -148,51 +148,56 @@
     </script>
   </head>
   <body>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-10">
+          <span style="font-size: 12px;">Retrieve air quality data from Purple Air.</span>
+        </div>
+        <div class="col-2">
+          <i
+            class="input-group-text info-icon bi bi-info-circle"
+            data-bs-toggle="modal"
+            data-bs-target="#creditsModal"
+          ></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="creditsModal"
+      tabindex="-1"
+      aria-labelledby="creditsModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="creditsModalLabel">About</h5>
+          </div>
+          <div class="modal-body" style="font-size: 12px;">
+            <p>These Air Quality data come from the Purple Air data repository and can be accessed at https://map.purpleair.com/.</p>
+            <p>This plugin was developed by ASU Decision Theater and the Impactful Computing Lab at Northern Arizona University.</p>
+            <p>This material is based on work supported by the National Science Foundation under Grant No. ITEST-1949241. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the NSF.</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-primary mt-2"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="wx-fixed-section-divider"/>
+
     <div class="container mt-4">
       <!-- <form class="" id="pap_form" action="#"> -->
-        <div class="row align-items-center mb-3">
-          <div class="col-10">
-            <span style="font-size: 12px;">Retrieve air quality data from Purple Air.</span>
-          </div>
-          <div class="col-2">
-            <i
-              class="input-group-text info-icon bi bi-info-circle"
-              data-bs-toggle="modal"
-              data-bs-target="#creditsModal"
-            ></i>
-          </div>
-        </div>
-    
-        <!-- Modal -->
-        <div
-          class="modal fade"
-          id="creditsModal"
-          tabindex="-1"
-          aria-labelledby="creditsModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="creditsModalLabel">About</h5>
-              </div>
-              <div class="modal-body" style="font-size: 12px;">
-                <p>These Air Quality data come from the Purple Air data repository and can be accessed at https://map.purpleair.com/.</p>
-                <p>This plugin was developed by ASU Decision Theater and the Impactful Computing Lab at Northern Arizona University.</p>
-                <p>This material is based on work supported by the National Science Foundation under Grant No. ITEST-1949241. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the NSF.</p>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-outline-primary mt-2"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
 
       <!-- city -->
       <div class="input-group mb-3">
@@ -202,7 +207,7 @@
           type="text"
           class="form-control"
           placeholder="Enter Your City Name"
-          style="width: fill-content"
+          style="width: fit-content"
           aria-label="Enter Your City Name"
           aria-describedby="cityHelp"
           autocomplete="off"
@@ -422,60 +427,30 @@
           ></div>
           <br />
         </div>
-        <div class="wx-cover"></div>
-        <div class="wx-pop-up-container">
-            <div class="wx-pop-up-content" >
-                <div class="wx-pop-up-header">
-                    More Information
-                </div>
-                <div class="wx-pop-up-body">
-                    <div id="wx-about-section" class="wx-dropdown wx-down">
-                        <div class="wx-section-header-line wx-dropdown-header" title="About this plugin">
-                            <div class="wx-section-title">About</div>
-                            <span class="wx-dropdown-indicator"></span>
-                        </div>
-                        <div class="wx-dropdown-body">
-                            <p>
-                                These weather data come from the National Centers
-                                for Environmental Information(NCEI), part of the National
-                                Oceanic and Atmospheric Administration (NOAA).
-                                Documentation is available at <a href="https://www.ncei.noaa.gov" target="_blank">https://www.ncei.noaa.gov</a>.
-                            </p>
-                            <p>
-                                This weather data portal was developed by
-                                <a href="https://concord.org" target="_blank">The Concord
-                                Consortium</a> as part of the <a href="https://www.edc.org/weatherx" target="_blank">WeatherX Project—Strategies:
-                                Understanding Weather Extremes with Big Data:
-                                Inspiring Rural Youth in Data Science</a> at the
-                                <a href="http://edc.org/" target="_blank">Education Development Center</a>.
-                            </p>
-                            <p>
-                                This material is based on work supported by the
-                                National Science Foundation under Grant No.
-                                DRL-1850477. Any opinions, findings, and conclusions
-                                or recommendations expressed in this material are
-                                those of the authors and do not necessarily reflect
-                                the views of the NSF.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div id="wx-info-close-section" class="wx-pop-up-footer">
-                    <div class="wx-control-row">
-                        <span><button id="wx-info-close-button" class="wx-button" title="Hide this section.">Close</button></span>
-                    </div>
-                </div>
-            </div>
+        <div class="d-flex mt-2">
+          <strong id="date_text">Loading Please Wait...</strong>
+          <div
+            class="spinner-border ml-auto"
+            role="status"
+            aria-hidden="true"
+          ></div>
+          <br />
         </div>
       </div>
 
-      <style>
-        .info-icon {
-          background: none;
-          border: 0;
-        }
-      </style>
-    </main>
+      <p id="msg" class="alert alert-danger mt-2" style="display: none"></p>
+      <!-- </form> -->
+
+      <!-- <button onclick="purple_air.disable_form_input()">Disable Form</button>
+    <button onclick="purple_air.enable_form_input()">Enable Form</button> -->
+    </div>
+
+    <style>
+      .info-icon {
+        background: none;
+        border: 0;
+      }
+    </style>
   </body>
 
   <!-- 
